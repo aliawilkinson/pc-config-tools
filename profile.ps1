@@ -4,6 +4,16 @@
 
 # works with powershell 5 and 7
 $env:psmodulepath += ';C:\Users\awilkinson\Documents\WindowsPowerShell\Modules'
+$modules = @(
+    "EditorServicesCommandSuite", 
+    "Posh-Git"
+)
+$modules | ForEach-Object {
+    $isAvail = Get-Module $_
+    if (-not $isAvail) {
+        Find-Module $_ | Install-Module
+    }
+}
 Import-Module EditorServicesCommandSuite, Posh-Git
 if ($host.name -like "Visual*") { Import-EditorCommand -Module EditorServicesCommandSuite }
 
