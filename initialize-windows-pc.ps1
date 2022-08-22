@@ -48,22 +48,14 @@ if (Get-Command Get-PackageParameters -ErrorAction SilentlyContinue)
 # Change your execution policy to Bypass
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine
 # Turn on remoting
-Enable-PSRemoting -Verbose -Force
+# Enable-PSRemoting -Verbose -Force
 # Set trusted hosts
 Set-Item -Path WSMan:\localhost\Client\TrustedHosts -Value * -Verbose -Force
 
-# Ensure the PowerShell DevOpsPowerShell source
+# Ensure the PowerShell source
 Install-PackageProvider NuGet -MinimumVersion 2.8.5.208 -ForceBootstrap
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-# $name = "DevOpsPowerShell"
-# $location = "https://nuget.loandepot.com/nuget/PowerShell"
-# Register-PackageSource -Name $name -Location $location -Trusted -Force -ForceBootstrap -ProviderName PowerShellGet
 Register-PackageSource -Name MyNuGet -Location https://www.nuget.org/api/v2 -ProviderName PowerShellGet
-
-Write-Verbose -Verbose "  Updating PackageManagement"
-Install-Module -Repository DevOpsPowerShell -Name PackageManagement -Force -Scope AllUsers -AllowClobber -SkipPublisherCheck
-Write-Verbose -Verbose "  Updating PowerShellGet"
-Install-Module -Repository DevOpsPowerShell -Name PowerShellGet -Force -Scope AllUsers -AllowClobber -SkipPublisherCheck
 
 
 # Now install the basic apps
